@@ -11,24 +11,59 @@ int main() {
     // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
     int navio2[2]={3 ,3};
     int navio3[3]={3 ,3 ,3};
-    int tabuleiro[10][10]={
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,3,0,0,3,0},
-        {0,0,0,0,3,0,0,0,3,0},
-        {0,0,0,3,0,0,0,0,0,0},
-        {0,0,3,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,3,3,3,0,0,0,0},
-        {0,0,0,0,0,0,0,3,0,0},
-        {0,0,0,0,0,0,0,0,3,0},
-        {0,0,0,0,0,0,0,0,0,3}
+    int cone[3][5]={
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {1, 1, 1, 1, 1}
     };
-    
-    printf("navio de dois lugares= %d, %d\n", navio2[0], navio2[1]);
-    printf("navio de 3 lugares= %d, %d, %d\n", navio3[0], navio3[1], navio3[2]);
+    int octaedro[3][5]={
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 1, 0},
+        {0, 0, 1, 0, 0}
+    };
+    int cruz[3][5]={
+        {0, 0, 1, 0, 0},
+        {1, 1, 1, 1, 1},
+        {0, 0, 1, 0, 0}
+    };
+    int tabuleiro[10][10];
     for(int x=0; x<10; x++){
         for(int y=0; y<10; y++){
-            printf("%d ", tabuleiro[x][y]);
+            tabuleiro[x][y] = 0;
+        };
+    };
+    int jogo[10][10];
+    for(int x=0; x<10; x++){
+        for(int y=0; y<10; y++){
+            jogo[x][y] = 0;
+        };
+    };
+    //printf("navio de dois lugares= %d, %d\n", navio2[0], navio2[1]);
+    //printf("navio de 3 lugares= %d, %d, %d\n", navio3[0], navio3[1], navio3[2]);
+    for(int x=0; x<10; x++){
+        for(int y=0; y<10; y++){
+           if(y==7 && x<=1){
+                jogo[x][y]= tabuleiro[x][y] + navio2[x];
+            };
+            if(y>=1 && y<=3 && x==8){
+                jogo[x][y]= tabuleiro[x][y] + navio3[y-1];
+            };
+            if(y==x && y>=3 && y<=5){
+                jogo[x][y]= tabuleiro[x][y] + navio3[y-3];
+            };
+            if(y==x && y>=7 && y<=10){
+                jogo[x][y]= tabuleiro[x][y] + navio3[y-7];
+            };
+            if(y>=0 && y<=4 && x<=2){
+                jogo[x][y]= tabuleiro[x][y] + cruz[x][y];
+            };
+            if(y>=1 && y<=5 && x>=5 && x<=7){
+                jogo[x][y]= tabuleiro[x][y] + cone[x-5][y-1];
+            };
+            if(y>=5 && y<=9 && x>=3 && x<=5){
+                jogo[x][y]= tabuleiro[x][y] + octaedro[x-3][y-5];
+            };
+            printf("%d ", jogo[x][y]);
         };
         printf("\n");
     };
